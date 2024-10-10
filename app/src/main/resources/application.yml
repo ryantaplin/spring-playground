@@ -1,0 +1,4 @@
+app:
+  info:
+    name: spring-playground
+    version: ${VERSION}

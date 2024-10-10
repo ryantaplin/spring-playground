@@ -1,0 +1,4 @@
+app:
+  infrastructure:
+    http-client:
+      connect-timeout: 5s
