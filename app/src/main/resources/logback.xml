@@ -1,0 +1,33 @@
+<!--
+MDC
+    %X{trace.uuid} - set by SomeFilterName.class
+-->
+<configuration scan="true" scanPeriod="60 seconds">
+    <appender name="APPLICATION" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[START] [CONTEXT=%logger] [LEVEL=%level] [AT=%date{ISO8601}] [%thread] \(%class: %line\) [TraceId=%X{trace.uuid}]%n%message%exception{full}%n[END]%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="AUDIT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[START] [CONTEXT=%logger] [LEVEL=%level] [AT=%date{ISO8601}] [%thread] \(%class: %line\) [TraceId=%X{trace.uuid}]%n%message%exception{full}%n[END]%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="AUDIT" level="INFO" additivity="false">
+        <appender-ref ref="AUDIT"/>
+    </logger>
+
+    <logger name="APPLICATION" level="INFO" additivity="false">
+        <appender-ref ref="APPLICATION"/>
+    </logger>
+
+    <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter">
+        <level value="INFO"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="APPLICATION"/>
+    </root>
+</configuration>
