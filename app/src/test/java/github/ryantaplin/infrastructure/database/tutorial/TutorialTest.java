@@ -15,26 +15,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Named.named;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-class TutorialDaoTest {
+class TutorialTest {
 
     @Nested
     class Builder {
         @ParameterizedTest
         @ArgumentsSource(TutorialMethodReferencesProvider.class)
-        void builderReturnsExpectedDefaultValues(Function<TutorialDao, Object> tutorialFunc) {
-            assertThat(tutorialFunc.apply(TutorialDao.tutorial().build())).isEqualTo(null);
+        void builderReturnsExpectedDefaultValues(Function<Tutorial, Object> tutorialFunc) {
+            assertThat(tutorialFunc.apply(Tutorial.tutorial().build())).isEqualTo(null);
         }
 
         @ParameterizedTest
         @ArgumentsSource(TutorialMethodReferencesWithExpectedValuesProvider.class)
-        void builderReturnsExpectedValues(Function<TutorialDao, Object> tutorialFunc, Function<TutorialDao.Builder, TutorialDao.Builder> builderFunc, Object expectedValue) {
-            TutorialDao builderResult = builderFunc.apply(TutorialDao.tutorial()).build();
+        void builderReturnsExpectedValues(Function<Tutorial, Object> tutorialFunc, Function<Tutorial.Builder, Tutorial.Builder> builderFunc, Object expectedValue) {
+            Tutorial builderResult = builderFunc.apply(Tutorial.tutorial()).build();
             assertThat(tutorialFunc.apply(builderResult)).isEqualTo(expectedValue);
         }
 
         @Test
         void builderMatchesResultOfToBuilder() {
-            TutorialDao tutorial = new TutorialDao(1L, "title", "description", true);
+            Tutorial tutorial = new Tutorial(1L, "title", "description", true);
             assertThat(tutorial.toBuilder().build()).isEqualTo(tutorial);
         }
     }
@@ -44,14 +44,14 @@ class TutorialDaoTest {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext extensionContext) {
             return Stream.of(
-                    arguments(named("Tutorial::id", ref(TutorialDao::id))),
-                    arguments(named("Tutorial::title", ref(TutorialDao::title))),
-                    arguments(named("Tutorial::description", ref(TutorialDao::description))),
-                    arguments(named("Tutorial::isPublished", ref(TutorialDao::published)))
+                    arguments(named("Tutorial::id", ref(Tutorial::id))),
+                    arguments(named("Tutorial::title", ref(Tutorial::title))),
+                    arguments(named("Tutorial::description", ref(Tutorial::description))),
+                    arguments(named("Tutorial::isPublished", ref(Tutorial::published)))
             );
         }
 
-        private Function<TutorialDao, Object> ref(Function<TutorialDao, Object> func) {
+        private Function<Tutorial, Object> ref(Function<Tutorial, Object> func) {
             return func;
         }
     }
@@ -61,33 +61,33 @@ class TutorialDaoTest {
         public Stream<Arguments> provideArguments(ExtensionContext extensionContext) {
             return Stream.of(
                     arguments(
-                            named("Tutorial::id", ref(TutorialDao::id)),
+                            named("Tutorial::id", ref(Tutorial::id)),
                             named("BuilderUnmodified", builder(builder -> builder)),
                             null
                     ),
                     arguments(
-                            named("Tutorial::title", ref(TutorialDao::title)),
+                            named("Tutorial::title", ref(Tutorial::title)),
                             named("Builder::withTitle", builder(builder -> builder.withTitle("value"))),
                             "value"
                     ),
                     arguments(
-                            named("Tutorial::description", ref(TutorialDao::description)),
+                            named("Tutorial::description", ref(Tutorial::description)),
                             named("Builder::withDescription", builder(builder -> builder.withDescription("value"))),
                             "value"
                     ),
                     arguments(
-                            named("Tutorial::isPublished", ref(TutorialDao::published)),
+                            named("Tutorial::isPublished", ref(Tutorial::published)),
                             named("Builder::withPublished", builder(builder -> builder.withPublished(true))),
                             true
                     )
             );
         }
 
-        private Function<TutorialDao, Object> ref(Function<TutorialDao, Object> func) {
+        private Function<Tutorial, Object> ref(Function<Tutorial, Object> func) {
             return func;
         }
 
-        private Function<TutorialDao.Builder, TutorialDao.Builder> builder(Function<TutorialDao.Builder, TutorialDao.Builder> func) {
+        private Function<Tutorial.Builder, Tutorial.Builder> builder(Function<Tutorial.Builder, Tutorial.Builder> func) {
             return func;
         }
     }

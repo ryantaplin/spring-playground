@@ -2,10 +2,10 @@ package github.ryantaplin.infrastructure.database.tutorial;
 
 import org.springframework.data.annotation.Id;
 
-public record TutorialDao(@Id Long id,
-                          String title,
-                          String description,
-                          Boolean published
+public record Tutorial(@Id Long id,
+                       String title,
+                       String description,
+                       Boolean published
 ) {
 
     public Builder toBuilder() {
@@ -46,8 +46,8 @@ public record TutorialDao(@Id Long id,
             return this;
         }
 
-        public TutorialDao build() {
-            return new TutorialDao(id, title, description, published);
+        public Tutorial build() {
+            return new Tutorial(id, title, description, published);
         }
     }
 }
